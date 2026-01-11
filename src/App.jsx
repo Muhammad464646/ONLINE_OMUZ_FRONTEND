@@ -5,6 +5,7 @@ import './App.css'
 import {Route,Routes} from 'react-router-dom'
 import Home from './pages/Home'
 import LoginAndRegister from './pages/LoginAndRegister'
+import Course from './pages/Course'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -12,6 +13,7 @@ function App() {
     <>
    <Routes>
     <Route path='/' element={<Home />} />
+    <Route path='/courses' element={<Course />} />
     <Route path='/Auth' element={<LoginAndRegister />} />
    </Routes>
     </>
