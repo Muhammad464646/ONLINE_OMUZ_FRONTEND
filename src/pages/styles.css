@@ -40,3 +40,31 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+
+.custom-tabs .ant-tabs-nav {
+  border-radius: 10px;
+  width: 33.5%;
+  margin: auto;
+  background-color: rgba(227, 220, 220, 0.484);
+}
+
+.custom-tabs .ant-tabs-tab {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px 30px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.custom-tabs .ant-tabs-tab-active {
+  background: #000000;
+}
+
+.custom-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white !important;
+}
+
+.custom-tabs .ant-tabs-ink-bar {
+  display: none;
+}

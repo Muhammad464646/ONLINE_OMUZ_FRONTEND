@@ -158,7 +158,7 @@ const scrollToTavsif = () => {
         <h1 className='text-3xl text-center mt-[100px] font-semibold'>Нақшаи комилро барои омӯзиши худ интихоб кунед</h1>
         <article className=' w-[35%] text-center bg-white p-10 mt-[100px]  rounded-2xl font-sans'>
         <h1 className='text-2xl'>{course.title}</h1><br />
-        <h1 className='text-2xl text-blue-500 font-extrabold'>{course.price}с</h1><br />
+        <h1 className='text-4xl text-blue-500 font-extrabold'>{course.price}с</h1><br />
         <h1 className='text-2xl'>/1мох</h1><br />
         <hr /><br />
         <button className='text-2xl border border-blue-500 w-full p-5 rounded-2xl text-blue-500'>Харид</button><br /><br />

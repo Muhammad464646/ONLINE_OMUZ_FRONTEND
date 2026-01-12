@@ -15,76 +15,85 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 const Home = () => {
     const [courses, setCourses] = useState([]);
-
+    const [filteredCourses, setFilteredCourses] = useState([]);
+    const [activeTab, setActiveTab] = useState('all');
     useEffect(() => {
         API.get('courses/')
-            .then(res => setCourses(res.data))
+            .then(res => {setCourses(res.data),
+            setFilteredCourses(res.data)}
+        )
             .catch(err => console.log(err));
     }, []);
 
-    const items = [
-  {
-    key: '1',
-    label: 'Tab 1',
-    children: 'Content of Tab Pane 1',
-  },
-  {
-    key: '2',
-    label: 'Tab 2',
-    children: 'Content of Tab Pane 2',
-  },
-  {
-    key: '3',
-    label: 'Tab 3',
-    children: 'Content of Tab Pane 3',
-  },
-];
+    const handleTabChange = (key) => {
+        setActiveTab(key);
 
+        if (key === 'all') {
+            setFilteredCourses(courses);
+        } else {
+            const filtered = courses.filter(
+                course => course.category === key
+            );
+            setFilteredCourses(filtered);
+        }
+    };
+
+    const items = [
+        { key: 'all', label: 'Ҳама курсҳо' },
+        { key: 'Frontend', label: 'Frontend' },
+        { key: 'Backend', label: 'Backend' },
+    ];
     return (
         <div className='bg-gray-100'>
-            <Header />
-            <section>
+            <section className='pt-30 w-[90%] m-auto'>
 
-            <Swiper
-                spaceBetween={30}
-                centeredSlides={true}
-                autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{
-                    clickable: true,
-                }}
-                navigation={true}
-                modules={[Autoplay, Pagination,]}
-                className="mySwiper"
-            >
-                <SwiperSlide><img  src="photo/ss3.png" alt="" /></SwiperSlide>
-                <SwiperSlide><img  src="photo/ss2.png" alt="" /></SwiperSlide>
-                <SwiperSlide><img  src="photo/ss1.png" alt="" /></SwiperSlide>
-            </Swiper>
-                </section>
-                <section className='flex justify-between'>
-                    <h1 className='text-[50px]'>Чаро Online Omuz-ро барои омӯзиш интихоб мекунанд?</h1>
-                    <article>
-                        <img width={2000} src="photo/ss4.png" alt="" />
-                    </article>
-                </section>
-                <section className=' text-center'>
-                    <h1 className='text-[50px]'>Афзалияти мо</h1>
-                    <article>
-                        <img width={2000} src="photo/ss5.png" alt="" />
-                    </article>
-                </section>
-                <section className='w-[90%] m-auto'>
-                    <h1 className='text-center text-2xl'>Хатмкунандагони мо дар ин ҷойҳо кор мекунанд</h1>
-                    <AutoPlaySwiping />
-                </section>
-            <Tabs defaultActiveKey="1" items={items} />
+                <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    navigation={true}
+                    modules={[Autoplay, Pagination,]}
+                    className="mySwiper"
+                >
+                    <SwiperSlide><img src="photo/ss3.png" alt="" /></SwiperSlide>
+                    <SwiperSlide><img src="photo/ss2.png" alt="" /></SwiperSlide>
+                    <SwiperSlide><img src="photo/ss1.png" alt="" /></SwiperSlide>
+                </Swiper>
+            </section>
+            <section className='flex justify-between mt-20 w-[90%] m-auto'>
+                <h1 className='text-[40px] font-bold'>Чаро Online Omuz-ро барои омӯзиш интихоб мекунанд?</h1>
+                <article>
+                    <img width={2000} src="photo/ss4.png" alt="" />
+                </article>
+            </section>
+            <section className=' text-center mt-20 mb-30'>
+                <h1 className='text-[40px] font-bold'>Афзалияти мо</h1>
+                <article>
+                    <img width={2000} src="photo/ss5.png" alt="" />
+                </article>
+            </section>
+            <section className='w-[90%] m-auto'>
+                <h1 className='text-center mb-10 text-4xl font-bold'>Хатмкунандагони мо дар ин ҷойҳо кор мекунанд</h1>
+                <AutoPlaySwiping />
+            </section>
             <div style={{ padding: '20px' }}>
-                <h1 className='text-center text-3xl font-bold'> Курсхо</h1>
+                <h1 className='text-center text-3xl font-bold'> Курсхо</h1><br />
+                <Tabs
+                    activeKey={activeTab}
+                    onChange={handleTabChange}
+                    items={items}
+                    centered
+                    className="custom-tabs"
+                />
+                <br /><br />
                 <Row gutter={[16, 16]}>
-                    {courses.map(course => (
+                    {filteredCourses.map(course => (
                         <Col key={course.id} span={6}>
                             <CourseCard course={course} />
                         </Col>
