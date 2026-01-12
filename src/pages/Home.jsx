@@ -3,7 +3,7 @@ import API from '../services/api';
 import { Row, Col, Tabs } from 'antd';
 import CourseCard from '../components/CourseCard';
 import AutoPlaySwiping from '../components/AutoPlaySwiping';
-import Header from './Header';
+import Header from '../components/Header';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import './styles.css'
 import 'swiper/css';
