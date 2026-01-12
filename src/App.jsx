@@ -8,6 +8,7 @@ import LoginAndRegister from './pages/LoginAndRegister'
 import Course from './pages/Course'
 import CoursePageById from './pages/CoursePageById'
 import Layout from './Layout'
+import AdminCourses from './pages/AdminCourses'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -18,6 +19,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/courses' element={<Course />} />
           <Route path='/courses/:id' element={<CoursePageById />} />
+          <Route path='/admin' element={<AdminCourses />} />
         </Route>
           <Route path='/Auth' element={<LoginAndRegister />} />
       </Routes>

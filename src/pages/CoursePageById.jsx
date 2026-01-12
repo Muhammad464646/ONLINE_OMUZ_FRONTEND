@@ -10,33 +10,39 @@ import { Row, Col, Tabs } from 'antd';
 import CourseCard from '../components/CourseCard';
 import './stl.css';
 import API from '../services/api';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Collapse } from 'antd';
 function CoursePageById() {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-const teacherRef = useRef(null);
-const obunaRef = useRef(null);
-const TavsifRef = useRef(null);
-const scrollToTeacher = () => {
-  teacherRef.current?.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-};
-const scrollToObuna = () => {
-  obunaRef.current?.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-};
-const scrollToTavsif = () => {
-  TavsifRef.current?.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
-};
+  const { Panel } = Collapse;
+  const teacherRef = useRef(null);
+  const obunaRef = useRef(null);
+  const TavsifRef = useRef(null);
+  const scrollToTeacher = () => {
+    teacherRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+  const scrollToObuna = () => {
+    obunaRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+  const scrollToTavsif = () => {
+    TavsifRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -80,11 +86,11 @@ const scrollToTavsif = () => {
         <h1 onClick={scrollToObuna}>Обуна</h1>
       </section><br />
       <hr className='w-[90%] m-auto' />
-      <section ref={TavsifRef}  className='w-[90%] m-auto mb-[100px] mt-[100px]'>
+      <section ref={TavsifRef} className='w-[90%] m-auto mb-[100px] mt-[100px]'>
         <h1 className='text-4xl font-bold'>{course.title}</h1><br />
         <p className='font-sans text-[20px]'>{course.description}</p>
       </section>
-      <section  className='w-[90%] m-auto' >
+      <section className='w-[90%] m-auto' >
         <h1 className='text-4xl font-bold'>Омӯзиш чӣ гуна сурат мегирад</h1>
         <Swiper
           slidesPerView={3}
@@ -127,19 +133,39 @@ const scrollToTavsif = () => {
           </SwiperSlide>
         </Swiper>
       </section>
-      <section>
-        <h1>Барномаи курс</h1>
+      <section className='w-[90%] m-auto mt-30'>
+        <h1 className='text-3xl text-center font-bold mb-10'>Барномаи курс</h1>
+
+        {course.lessons.map((el, index) => (
+          <Accordion key={index}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              {el.title}?
+            </AccordionSummary>
+            <AccordionDetails>
+              {el.content}
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </section>
       <section className='w-[90%] m-auto'>
         <h1 className='text-3xl font-bold text-center mb-[50px] mt-[100px]'>Омӯзгорони курс</h1>
         <section ref={teacherRef} className='flex flex-wrap justify-between '>
           {course.teacher && (
-            <div className='mb-[100px] w-[48%] bg-white p-[10px] rounded-2xl flex items-center gap-[10px]'>
+            <div className='mb-[100px] w-[48%] bg-white p-[10px] rounded-2xl flex  gap-[10px]'>
               <article>
                 <img width={200} src={`${course.teacher.profile_picture}`} alt="" />
                 <h1 className='font-bold '>{course.teacher.username}</h1>
               </article>
+              <article>
               <p className='font-bold'>{course.teacher.bio}</p>
+              <article className='flex'>
+              {course.teacher.skills.map((el)=>(
+                <div className='flex w-15'>
+                <img  className='ml-80' src={`${el.icon}`} alt="" />
+              </div>
+              ))}
+              </article>
+              </article>
             </div>
           )}
         </section>
@@ -157,12 +183,12 @@ const scrollToTavsif = () => {
       <section className='w-[90%] m-auto pb-20'>
         <h1 className='text-3xl text-center mt-[100px] font-semibold'>Нақшаи комилро барои омӯзиши худ интихоб кунед</h1>
         <article className=' w-[35%] text-center bg-white p-10 mt-[100px]  rounded-2xl font-sans'>
-        <h1 className='text-2xl'>{course.title}</h1><br />
-        <h1 className='text-4xl text-blue-500 font-extrabold'>{course.price}с</h1><br />
-        <h1 className='text-2xl'>/1мох</h1><br />
-        <hr /><br />
-        <button className='text-2xl border border-blue-500 w-full p-5 rounded-2xl text-blue-500'>Харид</button><br /><br />
-        <h1 ref={obunaRef} className='text-2xl'>Давомноки:мох 2✅</h1>
+          <h1 className='text-2xl'>{course.title}</h1><br />
+          <h1 className='text-4xl text-blue-500 font-extrabold'>{course.price}с</h1><br />
+          <h1 className='text-2xl'>/1мох</h1><br />
+          <hr /><br />
+          <button className='text-2xl border border-blue-500 w-full p-5 rounded-2xl text-blue-500'>Харид</button><br /><br />
+          <h1 ref={obunaRef} className='text-2xl'>Давомноки:мох 2✅</h1>
         </article>
       </section>
     </div>
